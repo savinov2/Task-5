@@ -46,6 +46,7 @@ public class AppConfig {
 
       factoryBean.setHibernateProperties(props);
       factoryBean.setAnnotatedClasses(User.class);
+      factoryBean.setPackagesToScan("hiber");
       return factoryBean;
    }
 

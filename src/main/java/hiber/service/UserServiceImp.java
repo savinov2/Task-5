@@ -25,5 +25,7 @@ public class UserServiceImp implements UserService {
    public List<User> listUsers() {
       return userDao.listUsers();
    }
-
+   public List<User> find(int serial, String model){
+      return userDao.find(serial, model);
+   }
 }

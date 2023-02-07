@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
@@ -31,20 +32,13 @@ public class UserDaoImp implements UserDao {
       TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
       return query.getResultList();
    }
-
+   @Transactional
    public List<User> find(int serial, String model){
-      Session session;
-      try {
-         session = sessionFactory.getCurrentSession();
-      } catch (HibernateException e) {
-         session = sessionFactory.openSession();
-      }
-      session.beginTransaction();
+      Session session=sessionFactory.getCurrentSession();
       Query<User> query = session.createQuery(
               "from User where car.serial = :serial and car.model = :model");
       query.setParameter("serial", serial);
       query.setParameter("model", model);
-      session.getTransaction().commit();
       return query.getResultList();
    }
 }
